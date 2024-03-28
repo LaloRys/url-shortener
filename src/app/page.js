@@ -7,7 +7,7 @@ import { validateUrl } from '@/util/validateUrl'
 function Home() {
   const [longUrl, setLongUrl] = useState('')
   const [links, setLinks] = useState({})
-  // console.log(longUrl)
+  // console.log(links)
 
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -109,7 +109,6 @@ function Home() {
           </thead>
           <tbody className="bg-slate-600 divide-y divide-gray-200">
             {Object.keys(links).map((short) => {
-              // console.log(short)
               const long = links[short]
         
               return (
@@ -118,7 +117,7 @@ function Home() {
                     className="px-6 py-4 whitespace-nowrap"
                     onClick={() => onShortUrlClick(short)}
                   >
-                    {`http://localhost:3000/go/${short}`}
+                    {`${baseURL}/go/${short}`}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">{long}</td>
                 </tr>
