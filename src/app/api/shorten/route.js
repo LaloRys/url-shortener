@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 export async function POST(request) {
   // get longUrl from body
   const { longUrl } = await request.json()
-  // console.log('Desde el servidor: ', longUrl)
+  console.log('Desde el servidor: ', longUrl)
 
   if (!longUrl || longUrl.length <= 0) {
     return NextResponse.json({ error: 'Invalid longUrl' }, { status: 400 })
@@ -12,20 +12,30 @@ export async function POST(request) {
 
   // generate short url
   const shortUrl = makeShortUrl(4)
+  
   console.log(shortUrl)
 
   // save it to redis
-  const result = await redis.hset('links', { [shortUrl]: longUrl })
-  // console.log(result)
+  try {
+    // Guardar la URL corta y la URL larga en Redis
+    await redis.hset('links', { [shortUrl]: longUrl })
+
+    // Retornar la URL corta y la URL larga agregadas
+    return NextResponse.json({
+      shortUrl,
+      longUrl,
+      message: 'Short URL generated successfully'
+    })
+  } catch (error) {
+    console.error('Error while saving data to Redis:', error)
+    return NextResponse.json({ error: 'Failed to save data to Redis' }, { status: 500 })
+  }
 
   // await redis.hset('key', { field: 'value' })
   // const field = await redis.hget('key', 'field')
   // const hash = await redis.hgetall('links')
   // console.log(hash) // "value"
 
-  return NextResponse.json({
-    message: 'Make short'
-  })
 }
 
 const makeShortUrl = (length) => {
