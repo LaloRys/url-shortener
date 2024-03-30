@@ -85,7 +85,7 @@ export function ShortenUrl() {
           </p>
         </div>
 
-        <div className="mx-auto max-w-sm space-y-2 ">
+        <div className="mx-auto max-w-sm space-y-2 mb-4">
           <div className="flex gap-x-1">
             <Input
               className="w-full rounded-none rounded-l-lg"
@@ -98,9 +98,9 @@ export function ShortenUrl() {
               Shorten
             </Button>
           </div>
-          <Button onClick={notify} variant="">
+          {/* <Button onClick={notify} variant="">
             Show toast
-          </Button>
+          </Button> */}
         </div>
 
         <div className="mx-auto max-w-md space-y-4">
