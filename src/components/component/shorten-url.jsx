@@ -53,12 +53,6 @@ export function ShortenUrl() {
     toast('Wow so easy !')
     console.log(link.shortUrl)
     console.log(process.env.NODE_ENV)
-    console.log(window.location.pathname)
-    console.log(window.location.hostname)
-    const fullURL =
-      window.location.hostname +
-      (window.location.port ? ':' + window.location.port : '') +
-      '/'
     console.log(fullURL)
   }
 
@@ -76,7 +70,8 @@ export function ShortenUrl() {
     )
   }
 
-  const fullURL = window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+  const fullURL = process.env.NEXT_PUBLIC_HOSTNAME || (typeof window !== 'undefined' ? window.location.hostname + (window.location.port ? ':' + window.location.port : '') : '');
+
 
   return (
     <div className="bg-gray-50/90 w-full min-h-svh py-12">
@@ -112,7 +107,7 @@ export function ShortenUrl() {
           <div className="divide-y">
             {link?.shortUrl ? (
               <div>
-                <h3 className="text-sky-400 font-medium">Your new link is: </h3>
+                <h3 className="text-gray-500 text-xl font-medium">Your new link is: </h3>
                 <div className="flex gap-x-1">
                   <Input type="text" value={`${fullURL}/go/${link.shortUrl}`} />
                   <Button
